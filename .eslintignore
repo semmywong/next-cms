@@ -1,0 +1,15 @@
+/lambda/
+/scripts
+/config
+/configs/cli/templates
+.history
+public
+dist
+.umi
+mock
+.husky
+**/tests/*
+**/*.test.js
+**/*.test.jsx
+**/*.test.ts
+**/*.test.tsx
