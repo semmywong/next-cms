@@ -13,7 +13,6 @@ export const forceConsume = async (response: Response) => {
 // Create token
 export function generateToken(length = 64) {
   const tokenBytes = randomBytes(Math.ceil(length / 2)); // Convert length from bytes to hex
-
   return tokenBytes.toString('hex').slice(0, length);
 }
 

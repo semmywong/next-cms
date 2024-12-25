@@ -1,5 +1,5 @@
 {
-  "name": "next-cm",
+  "name": "next-cms",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,11 +7,10 @@
     "dev:web": "turbo run dev --filter=web",
     "build": "turbo run build",
     "build:web": "turbo run build --filter=web",
-    "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "clear": "node ./scripts/clear.js"
+    "clean": "node ./scripts/clean.js"
   },
   "dependencies": {},
   "devDependencies": {
@@ -25,5 +24,6 @@
     "node": ">=14.0.0",
     "npm": ">=7.0.0"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "license": "MIT"
 }

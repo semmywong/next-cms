@@ -1,6 +1,7 @@
 {
   "extends": "@next-cms/typescript-config/base.json",
   "compilerOptions": {
+    "declaration": true,
     "lib": [
       "ES2015",
       "DOM"

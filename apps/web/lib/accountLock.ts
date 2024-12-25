@@ -1,32 +1,32 @@
+/*
+ * @Author: Semmy Wong
+ * @Date: 2024-11-27 22:47:06
+ * @LastEditors: Semmy Wong
+ * @LastEditTime: 2024-12-12 22:05:26
+ * @Description: Description
+ */
 import { render } from '@react-email/components';
 
-import AccountLocked from '@/components/emailTemplates/AccountLocked';
-import { User } from '@prisma/client';
-import { updateUser } from 'models/user';
-import { createVerificationToken } from 'models/verificationToken';
-import app from './app';
+import { AppInfo } from '@/common/constants';
+import AccountLocked from '@/components/email-templates/AccountLocked';
+import { db } from '@/db';
+import { users, verificationTokens, type User } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 import { sendEmail } from './email/sendEmail';
 import env from './env';
+import { generateToken } from './server-common';
 
 const UNLOCK_ACCOUNT_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 export const incrementLoginAttempts = async (user: User) => {
-  const updatedUser = await updateUser({
-    where: { id: user.id },
-    data: {
-      invalid_login_attempts: {
-        increment: 1,
-      },
-    },
-  });
+  const [updatedUser] = await db.update(users).set({
+    invalidLoginAttempts: 1,
+  }).where(eq(users.id, user.id)).returning();
 
   if (exceededLoginAttemptsThreshold(updatedUser)) {
-    await updateUser({
-      where: { id: user.id },
-      data: {
-        lockedAt: new Date(),
-      },
-    });
+    await db.update(users).set({
+      lockedAt: new Date(),
+    }).where(eq(users.id, user.id));
 
     await sendLockoutEmail(user);
   }
@@ -35,36 +35,32 @@ export const incrementLoginAttempts = async (user: User) => {
 };
 
 export const clearLoginAttempts = async (user: User) => {
-  await updateUser({
-    where: { id: user.id },
-    data: {
-      invalid_login_attempts: 0,
-    },
-  });
+  await db.update(users).set({
+    invalidLoginAttempts: 0,
+    lockedAt: null,
+  }).where(eq(users.id, user.id));
 };
 
 export const unlockAccount = async (user: User) => {
-  await updateUser({
-    where: { id: user.id },
-    data: {
-      invalid_login_attempts: 0,
-      lockedAt: null,
-    },
-  });
+  await db.update(users).set({
+    invalidLoginAttempts: 0,
+    lockedAt: null,
+  }).where(eq(users.id, user.id));
 };
 
 export const sendLockoutEmail = async (user: User, resending = false) => {
-  const verificationToken = await createVerificationToken({
+  const [verificationToken] = await db.insert(verificationTokens).values({
     identifier: user.email,
     expires: new Date(Date.now() + UNLOCK_ACCOUNT_TOKEN_EXPIRATION),
-  });
+    token: generateToken()
+  }).returning();
 
-  const subject = resending ? `Unlock your ${app.name} account` : `Your ${app.name} account has been locked`;
+  const subject = resending ? `Unlock your ${AppInfo.name} account` : `Your ${AppInfo.name} account has been locked`;
 
   const token = encodeURIComponent(verificationToken.token);
-  const url = `${app.url}/auth/unlock-account?token=${token}`;
+  const url = `${AppInfo.url}/auth/unlock-account?token=${token}`;
 
-  const html = render(AccountLocked({ subject, url }));
+  const html = await render(AccountLocked({ subject, url }));
 
   await sendEmail({
     to: user.email,
@@ -74,7 +70,7 @@ export const sendLockoutEmail = async (user: User, resending = false) => {
 };
 
 export const exceededLoginAttemptsThreshold = (user: User) => {
-  return user.invalid_login_attempts >= env.maxLoginAttempts;
+  return user.invalidLoginAttempts >= env.maxLoginAttempts;
 };
 
 export const isAccountLocked = (user: User) => {

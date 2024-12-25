@@ -2,7 +2,7 @@ import { Button } from '@next-cms/ui/button';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-function Gradient({ conic, className, small }: { small?: boolean; conic?: boolean; className?: string }): JSX.Element {
+function Gradient({ conic, className, small }: { small?: boolean; conic?: boolean; className?: string }) {
   return (
     <span
       className={[
@@ -40,7 +40,7 @@ const LINKS = [
   },
 ];
 
-export default function Page(): JSX.Element {
+export default function Page() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>

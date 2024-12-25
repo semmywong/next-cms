@@ -2,7 +2,7 @@
  * @Author: Semmy Wong
  * @Date: 2024-03-15 19:22:28
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2024-12-11 15:26:56
+ * @LastEditTime: 2024-12-12 22:21:06
  * @Description: Description
  */
 import { db } from '@/db';
@@ -86,7 +86,7 @@ if (isAuthProviderEnabled('credentials')) {
         await clearLoginAttempts(user);
 
         return {
-          id: user.id,
+          id: user.id as unknown as string,
           name: user.name,
           email: user.email,
         };
@@ -285,17 +285,18 @@ const getAuthOptions = () => {
           const [{ id }] = await db.insert(users).values({
             name: user.name,
             email: user.email,
+            invalidLoginAttempts: 0,
           }).returning();
-          const newUser = { ...user, id: id.toString() };
+          const newUser = { ...user, id: id as unknown as string };
 
           await linkAccount(newUser, account);
 
           if (isIdpLogin && user) {
-            await linkToTeam(user as unknown as Profile, newUser.id);
+            await linkToTeam(user as unknown as Profile, id);
           }
 
           if (account.provider === 'boxyhq-saml' && profile) {
-            await linkToTeam(profile, newUser.id);
+            await linkToTeam(profile, id);
           }
 
           // if (isCredentialsProviderCallbackWithDbSession) {
@@ -313,7 +314,7 @@ const getAuthOptions = () => {
         const linkedAccount = db.query.accounts.findFirst({ where: eq(accounts.userId, existingUser.id) });
 
         if (!linkedAccount) {
-          await linkAccount(existingUser, account);
+          await linkAccount(existingUser as unknown as User, account);
         }
 
         return true;
@@ -375,10 +376,6 @@ const getAuthOptions = () => {
   return authOptions;
 };
 
-export const { handlers, auth } = NextAuth({
-  ...getAuthOptions(),
-});
-
 const linkAccount = async (user: User, account: Account) => {
   if (adapter.linkAccount) {
     return await adapter.linkAccount({
@@ -393,8 +390,13 @@ const linkAccount = async (user: User, account: Account) => {
   }
 };
 
-const linkToTeam = async (profile: Profile, userId: string) => {
+const linkToTeam = async (profile: Profile, userId: number) => {
   const team = await db.query.teams.findFirst({ where: eq(teams.id, profile.tenantId as number) });
 
   await db.insert(teamMembers).values({ teamId: team!.id, userId, createdAt: new Date(), updatedAt: new Date() });
 };
+
+export const { handlers, auth } = NextAuth({
+  ...getAuthOptions(),
+});
+

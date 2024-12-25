@@ -20,7 +20,7 @@ function deleteTargetFolder(path, target) {
             deleteFolder(curPath);
             console.log('successfully delete the directory. %s', curPath);
           } catch (error) {
-            console.log('failed to delete directory. %s', curPath);
+            console.error('failed to delete directory. %s', curPath);
           }
         } else {
           deleteTargetFolder(curPath, target);

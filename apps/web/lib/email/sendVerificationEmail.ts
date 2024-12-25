@@ -8,7 +8,7 @@ export const sendVerificationEmail = async ({ user, verificationToken }: { user:
   const subject = `Confirm your ${AppInfo.name} account`;
   const verificationLink = `${env.appUrl}/auth/verify-email-token?token=${encodeURIComponent(verificationToken.token)}`;
 
-  const html = render(VerificationEmail({ subject, verificationLink }));
+  const html = await render(VerificationEmail({ subject, verificationLink }));
 
   await sendEmail({
     to: user.email,

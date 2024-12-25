@@ -2,7 +2,7 @@
  * @Author: Semmy Wong
  * @Date: 2024-03-27 15:13:38
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2024-12-11 17:24:59
+ * @LastEditTime: 2024-12-12 22:08:43
  * @Description: Description
  */
 import type { AdapterAccount } from '@auth/core/adapters';
@@ -18,8 +18,12 @@ export const users = pgTable('user', {
   emailVerified: timestamp({ mode: 'date' }).defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
+  invalidLoginAttempts: integer().default(0).notNull(),
+  lockedAt: timestamp({ mode: 'date' }),
   image: varchar({ length: 255 }),
 });
+
+export type User = typeof users.$inferSelect;
 
 export const accounts = pgTable('account', {
   id: serial().primaryKey(),
