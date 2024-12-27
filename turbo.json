@@ -1,8 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "tasks": {
     "build": {
-      "cache": false,
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env*"
