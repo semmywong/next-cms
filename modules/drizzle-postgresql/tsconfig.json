@@ -1,0 +1,28 @@
+{
+  "extends": "@next-cms/typescript-config/module.json",
+  "compilerOptions": {
+    "declaration": true,
+    "lib": [
+      "ES2015",
+      "DOM"
+    ],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": [
+      "jest",
+      "node"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

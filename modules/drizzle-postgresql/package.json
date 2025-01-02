@@ -1,0 +1,40 @@
+{
+  "name": "@next-cms/module-drizzle-postgresql",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "lint": "eslint \"src/**/*.ts*\" --max-warnings 0",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "@next-cms/jest-presets/node"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.10",
+    "@jest/globals": "^29.7.0",
+    "@next-cms/eslint-config": "workspace:*",
+    "@next-cms/jest-presets": "workspace:*",
+    "@next-cms/typescript-config": "workspace:*",
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "typescript": "5.7.2"
+  },
+  "peerDependencies": {
+    "@auth/core": "0.37.4",
+    "pg": "8.13.1",
+    "drizzle-orm": "0.38.0"
+  }
+}

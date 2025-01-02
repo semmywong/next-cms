@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next-cms/module-drizzle-postgresql": "workspace:*",
     "@next-cms/ui": "workspace:*",
     "@auth/core": "0.37.4",
     "@auth/drizzle-adapter": "1.7.4",
