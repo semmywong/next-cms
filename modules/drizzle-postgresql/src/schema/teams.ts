@@ -5,8 +5,8 @@
  * @LastEditTime: 2025-01-02 21:05:57
  * @Description: Description
  */
-import { pgTable } from '@/common/pg-table';
 import { serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgTable } from '../common/pg-table';
 
 export const teams = pgTable('team', {
     id: serial().primaryKey(),

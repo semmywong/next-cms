@@ -2,10 +2,9 @@
  * @Author: Semmy Wong
  * @Date: 2024-03-15 19:22:28
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2024-12-12 22:21:06
+ * @LastEditTime: 2025-01-06 17:53:08
  * @Description: Description
  */
-import { db } from '@/db';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { setCookie } from 'cookies-next';
 import { randomUUID } from 'crypto';
@@ -19,8 +18,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import NodemailerProvider from 'next-auth/providers/nodemailer';
-
-import { accounts, teamMembers, teams, users } from '@/db/schema';
+import db, { accounts, teamMembers, teams, users } from '@/db';
 import { clearLoginAttempts, exceededLoginAttemptsThreshold, incrementLoginAttempts } from '@/lib/accountLock';
 import { isAuthProviderEnabled, verifyPassword } from '@/lib/auth';
 import { maxLengthPolicies } from '@/lib/common';

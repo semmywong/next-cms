@@ -2,7 +2,7 @@
  * @Author: Semmy Wong
  * @Date: 2024-12-11 16:11:34
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2024-12-30 22:10:37
+ * @LastEditTime: 2025-01-06 17:51:56
  * @Description: Description
  */
 import { migrate } from 'drizzle-orm/postgres-js/migrator';

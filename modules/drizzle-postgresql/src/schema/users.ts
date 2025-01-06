@@ -2,11 +2,11 @@
  * @Author: Semmy Wong
  * @Date: 2025-01-02 20:59:30
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2025-01-02 21:01:04
+ * @LastEditTime: 2025-01-04 15:06:03
  * @Description: Description
  */
 
-import { pgTable } from '@/common/pg-table';
+import { pgTable } from '../common/pg-table';
 import { integer, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('user', {

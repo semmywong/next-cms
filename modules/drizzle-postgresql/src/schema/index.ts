@@ -7,6 +7,8 @@ import { verificationTokens } from './verification-tokens';
 
 export { accounts, sessions, teamMembers, teams, users, verificationTokens };
 
+export type User = typeof users.$inferSelect;
+
 export const schema = { accounts, sessions, teamMembers, teams, users, verificationTokens };
 
 export default schema;

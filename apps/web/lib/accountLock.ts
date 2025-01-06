@@ -2,7 +2,7 @@
  * @Author: Semmy Wong
  * @Date: 2024-11-27 22:47:06
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2024-12-12 22:05:26
+ * @LastEditTime: 2025-01-04 20:20:07
  * @Description: Description
  */
 import { render } from '@react-email/components';
@@ -10,11 +10,12 @@ import { render } from '@react-email/components';
 import { AppInfo } from '@/common/constants';
 import AccountLocked from '@/components/email-templates/AccountLocked';
 import { db } from '@/db';
-import { users, verificationTokens, type User } from '@/db/schema';
+import { users, verificationTokens } from '@/db';
 import { eq } from 'drizzle-orm';
 import { sendEmail } from './email/sendEmail';
 import env from './env';
 import { generateToken } from './server-common';
+import { type User } from '@next-cms/module-drizzle-postgresql/schema';
 
 const UNLOCK_ACCOUNT_TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7 days
 

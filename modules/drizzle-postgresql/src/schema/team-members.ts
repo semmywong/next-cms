@@ -1,5 +1,5 @@
-import { pgTable } from '@/common/pg-table';
 import { integer, serial, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable } from '../common/pg-table';
 import { users } from './users';
 
 export const teamMembers = pgTable('team_member', {
