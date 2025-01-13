@@ -1,5 +1,5 @@
 {
-  "extends": "@next-cms/typescript-config/base.json",
+  "extends": "@next-cms/typescript-config/module.json",
   "compilerOptions": {
     "declaration": true,
     "lib": [
@@ -11,10 +11,16 @@
     "types": [
       "jest",
       "node"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
-    "src"
+    "src",
   ],
   "exclude": [
     "node_modules"

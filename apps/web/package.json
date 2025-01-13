@@ -18,6 +18,7 @@
     "@sentry/nextjs": "8.41.0",
     "bcryptjs": "2.4.3",
     "cookies-next": "5.0.2",
+    "mysql2": "3.12.0",
     "pg": "8.13.1",
     "drizzle-orm": "0.38.0",
     "i18next": "24.1.0",

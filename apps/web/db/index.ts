@@ -2,7 +2,7 @@
  * @Author: Semmy Wong
  * @Date: 2025-01-04 18:39:19
  * @LastEditors: Semmy Wong
- * @LastEditTime: 2025-01-06 17:48:58
+ * @LastEditTime: 2025-01-13 17:27:25
  * @Description: Description
  */
 import { init } from '@next-cms/module-drizzle-postgresql';
